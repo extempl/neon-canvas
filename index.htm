@@ -69,13 +69,22 @@
 			var neonText = new Neon();
 			libcanvas.addElement(neonText);
 
-
 			var rand = Number.random;
 
-			setInterval(function() {
+			var switcher = function() {
+			  neonText.on = !neonText.on;
+			  console.log(neonText.on);
+			  libcanvas.update();
+			  switcher.delay( Number.random(100, 1500) );
+			};
+			
+			switcher();
+
+			/*setInterval(function() {
 				neonText.on = !neonText.on;
-				console.log(neonText.on);
-			}, rand(1000, 15000));
+				console.log(neonText.on + ' ' + rand(100, 1500));
+				libcanvas.update();
+			}, rand(100, 3500));*/
 		}
 	</script>
 	<!--<fieldset class="main-block">
