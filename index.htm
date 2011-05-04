@@ -22,22 +22,28 @@
 		<legend>Test</legend>
 		<canvas id="neon_test"></canvas>
 	</fieldset>
-<!--	<script src="js/ui-core.js"></script>-->
 	<script>
 		new function () {
 
 			LibCanvas.extract();
+
+			var fontsize = 60;
+			var em = function(factor) {
+				return factor * fontsize;
+			}
+
+			var textColor = '#fff';
 
 			var Neon = atom.Class({
 				Implements: [Drawable],
 
 				get style () {
 					return this.on ? {
-							shadow  : { shadowBlur: 40, shadowColor: '#fff' },
-							text: '#fff',
+							shadow  : { shadowBlur: em(0.1), shadowColor: textColor },
+							text: textColor,
 							family: 'Neon_Regular'
 						} : {
-							shadow  : { shadowBlur: 3, shadowColor: '#000' },
+							shadow  : { shadowBlur: em(0.1), shadowColor: '#000', shadowOffsetX: 1, shadowOffsetY: 1 },
 							text: '#444',
 							family: 'Neon_Regular'
 						}
@@ -51,16 +57,25 @@
 						.text({
 							text: 'Neon Light',
 							color  : style.text,
-							size   : 60,
+							align  : 'center',
+							size   : fontsize,
 							family : style.family
 						})
 					.restore();
+					var shadows = [0.6, 1.2, 1.8, 2.4];
+					if(this.on) {
+						for(var i = 0; i < shadows.length; i++) {
+							ctx.shadowBlur  = em(shadows[i]);
+							ctx.shadowColor = textColor;
+						}
+						ctx.restore();
+					}
 				}
 			});
 
 			var libcanvas = new LibCanvas('#neon_test')
 				.size({
-					width : 382,
+					width : 400,
 					height: 90
 				}, true)
 				.start();
@@ -69,22 +84,14 @@
 			var neonText = new Neon();
 			libcanvas.addElement(neonText);
 
-			var rand = Number.random;
-
 			var switcher = function() {
 			  neonText.on = !neonText.on;
-			  console.log(neonText.on);
 			  libcanvas.update();
 			  switcher.delay( Number.random(100, 1500) );
 			};
 			
 			switcher();
 
-			/*setInterval(function() {
-				neonText.on = !neonText.on;
-				console.log(neonText.on + ' ' + rand(100, 1500));
-				libcanvas.update();
-			}, rand(100, 3500));*/
 		}
 	</script>
 	<!--<fieldset class="main-block">
