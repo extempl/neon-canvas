@@ -13,20 +13,33 @@
 *[data-neon] {
 	font-family: Neon_Regular;
 	font-size:60px;
+	line-height:60px;
+}
+
+*[data-neon] span {
+	z-index: 10;
+	position: relative;
+	font-weight: normal;
 }
 
 *[data-neon='basic'], *[data-neon='custom'] span {
 	color: #fff;
-	text-shadow:0 0  .1em rgba(255, 255, 255, .6),
-				0 0  .6em rgba(255, 255, 255, .2),
-				0 0 1.2em rgba(255, 255, 255, .4),
-				0 0 1.8em rgba(255, 255, 255, .6),
-				0 0 2.4em rgba(255, 255, 255, .8),
-				.02em .02em  .1em rgba(0, 0, 0, 1);
+	display:inline-block;
+	position: relative;
 }
 
-#neon_test {
-	/*width:372px;
-	height:60px;*/
-	/*margin:40px 0;*/
+.main-block {
+	text-align:center;
 }
+
+.libcanvas-layers-container {
+	left : 0;
+	top  : 0;
+	position : absolute;
+	z-index  : 9;
+}
+
+	.libcanvas-layers-container canvas {
+		left: 0;
+		top : 0;
+	}

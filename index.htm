@@ -8,9 +8,10 @@
 	<link href="css/neon.css" rel="stylesheet">
 	<script type="text/javascript" src="js/atom.js"></script>
     <script type="text/javascript" src="js/libcanvas.js"></script>
-<!--    <script type="text/javascript" src="js/jquery.neon.js"></script>-->
+    <script type="text/javascript" src="js/neonCanvas.js"></script>
+	<!--<script type="text/javascript">atom.dom(function() {atom.dom().initNeon()})</script>-->
 </head>
-<body>
+<body onload="atom.dom(function() {atom.dom().initNeon()})">
 	<header>
 		<p class="preface">This is the demo of <a href="https://github.com/extempl/neon">Neon font libCanvas plugin</a></p>
 	</header>
@@ -20,16 +21,17 @@
 	</fieldset>
 	<fieldset class="main-block">
 		<legend>Test</legend>
-		<canvas id="neon_test"></canvas>
+		<h1 data-neon='basic'>Neon Light</h1>
 	</fieldset>
+<!--
 	<script>
 		new function () {
 
 			LibCanvas.extract();
 
-			var fontsize = 60;
+			var fontSize = 60;
 			var em = function(factor) {
-				return factor * fontsize;
+				return factor * fontSize;
 			}
 
 			var textColor = '#fff';
@@ -37,46 +39,45 @@
 			var Neon = atom.Class({
 				Implements: [Drawable],
 
-				get style () {
-					return this.on ? {
-							shadow  : { shadowBlur: em(0.1), shadowColor: textColor },
-							text: textColor,
-							family: 'Neon_Regular'
-						} : {
-							shadow  : { shadowBlur: em(0.1), shadowColor: '#000', shadowOffsetX: 1, shadowOffsetY: 1 },
-							text: '#444',
-							family: 'Neon_Regular'
-						}
-				},
 
 				draw: function () {
-					var ctx = this.libcanvas.ctx, style = this.style;
-					ctx
-					.save()
-						.set(style.shadow)
-						.text({
-							text: 'Neon Light',
-							color  : style.text,
-							align  : 'center',
-							size   : fontsize,
-							family : style.family
-						})
-					.restore();
-					var shadows = [0.6, 1.2, 1.8, 2.4];
+					var ctx = this.libcanvas.ctx;
+					var shadows = {};
+					shadows[0] = ({blur: 0.1, alpha: 1});
+					shadows[1] = ({blur: 0.5, alpha: 0.04});
+					shadows[2] = ({blur: 0.8, alpha: 0.06});
+					shadows[3] = ({blur: 1.0, alpha: 0.08});
+					shadows[4] = ({blur: 1.8, alpha: 0.1});
 					if(this.on) {
-						for(var i = 0; i < shadows.length; i++) {
-							ctx.shadowBlur  = em(shadows[i]);
-							ctx.shadowColor = textColor;
+						for(var i in shadows) {
+							ctx.font = fontSize + 'px Neon_Regular';
+							ctx.fillText("Neon Light", 35, 100);
+							ctx.fillStyle      = textColor;
+							ctx.globalAlpha    = shadows[i].alpha;
+							ctx.shadowBlur     = em(shadows[i].blur);
+							ctx.shadowOffsetX  = 0;
+							ctx.shadowOffsetY  = 0;
+							ctx.shadowColor    = textColor;
+							ctx.restore();
 						}
-						ctx.restore();
 					}
+					ctx.font = fontSize + 'px Neon_Regular';
+					ctx.fillText("Neon Light", 35, 100);
+					ctx.fillStyle      = '#444';
+					ctx.globalAlpha    = 1;
+					ctx.shadowBlur     = em(0.1);
+					ctx.shadowOffsetX  = em(0.02);
+					ctx.shadowOffsetY  = em(0.02);
+					ctx.shadowColor    = '#000';
+					ctx.restore();
 				}
+
 			});
 
 			var libcanvas = new LibCanvas('#neon_test')
 				.size({
-					width : 400,
-					height: 90
+					width : 450,
+					height: 180
 				}, true)
 				.start();
 
@@ -89,11 +90,12 @@
 			  libcanvas.update();
 			  switcher.delay( Number.random(100, 1500) );
 			};
-			
+
 			switcher();
 
 		}
 	</script>
+-->
 	<!--<fieldset class="main-block">
 		<legend>Basic</legend>
 		<h1 data-neon="basic">Neon Light</h1>
