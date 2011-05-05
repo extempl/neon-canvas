@@ -1,6 +1,7 @@
 new function() {
 
-	var eachInitNeon = function() {
+	var eachInitNeon = function($elem) {
+		console.log($elem);
 		this.replaceNeon();
 	};
 
@@ -64,6 +65,7 @@ new function() {
 				.create('canvas')
 				.appendTo($elem)
 				.drawContent(config);
+			return $elem;
 		},
 
 
@@ -103,27 +105,27 @@ new function() {
 					var shadowsSrc = {
 						chrome: {
 							0: {blur: 0.1, alpha: 1},
-							1: {blur: 0.4, alpha: 0.02},
-							2: {blur: 0.6, alpha: 0.04},
-							3: {blur: 0.8, alpha: 0.06},
-							4: {blur: 1.0, alpha: 0.08}
+							1: {blur: 0.6, alpha: 0.4},
+							2: {blur: 0.8, alpha: 0.6},
+							3: {blur: 1.0, alpha: 0.8},
+							4: {blur: 1.4, alpha: 1}
 						},
 						firefox: {
-							0: {alpha: 0.2},
-							1: {alpha: 0.4},
-							2: {alpha: 0.6},
-							3: {alpha: 0.8}
+							0: {blur: 0.1, alpha: 1},
+							1: {blur: 0.6, alpha: 1},
+							2: {blur: 0.8, alpha: 1},
+							3: {blur: 1.0, alpha: 1},
+							4: {blur: 0,   alpha: 0}
 						},
 						opera: {
-							1: {alpha: 0.2},
-							2: {blur: 0.8, alpha: 0.4},
-							3: {blur: 1.6, alpha: 0.6},
-							4: {blur: 2.4, alpha: 0.8},
-							5: {blur: 3.2, alpha: 1}
+							1: {blur: 0.8, alpha: 0.4},
+							2: {blur: 1.5, alpha: 0.6},
+							3: {blur: 3.0, alpha: 0.8},
+							4: {blur: 6.0, alpha: 1}
 						}
 					};
 					var shadows = atom.extend(shadowsSrc.chrome, userAgent(shadowsSrc));
-					atom.log(shadows);
+//					atom.log(shadows);
 					if(this.on) {
 						for(var i in shadows) {
 							ctx.fillText(text, padding, 55 + padding);
@@ -160,15 +162,16 @@ new function() {
 
 			var neonText = new Neon();
 			libcanvas.addElement(neonText);
-			//neonText.on = true;
-			var switcher = function() {
+			neonText.on = true;
+			/*var switcher = function() {
 			  neonText.on = !neonText.on;
 			  libcanvas.update();
 			  switcher.delay( Number.random(100, 1500) );
 			};
 
-			switcher();
+			switcher();*/
+			return $elem;
 		}
 
 	});
-}
+};

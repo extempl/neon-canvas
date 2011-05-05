@@ -9,7 +9,6 @@
 	<script type="text/javascript" src="js/atom.js"></script>
     <script type="text/javascript" src="js/libcanvas.js"></script>
     <script type="text/javascript" src="js/neonCanvas.js"></script>
-	<!--<script type="text/javascript">atom.dom(function() {atom.dom().initNeon()})</script>-->
 </head>
 <body onload="atom.dom(function() {atom.dom().initNeon()})">
 	<header>
@@ -21,88 +20,15 @@
 	</fieldset>
 	<fieldset class="main-block">
 		<legend>Test</legend>
-		<h1 data-neon='basic'>Neon Light</h1>
+		<h1 data-neon='basic'>Neon Light_1</h1>
 	</fieldset>
-<!--
-	<script>
-		new function () {
-
-			LibCanvas.extract();
-
-			var fontSize = 60;
-			var em = function(factor) {
-				return factor * fontSize;
-			}
-
-			var textColor = '#fff';
-
-			var Neon = atom.Class({
-				Implements: [Drawable],
-
-
-				draw: function () {
-					var ctx = this.libcanvas.ctx;
-					var shadows = {};
-					shadows[0] = ({blur: 0.1, alpha: 1});
-					shadows[1] = ({blur: 0.5, alpha: 0.04});
-					shadows[2] = ({blur: 0.8, alpha: 0.06});
-					shadows[3] = ({blur: 1.0, alpha: 0.08});
-					shadows[4] = ({blur: 1.8, alpha: 0.1});
-					if(this.on) {
-						for(var i in shadows) {
-							ctx.font = fontSize + 'px Neon_Regular';
-							ctx.fillText("Neon Light", 35, 100);
-							ctx.fillStyle      = textColor;
-							ctx.globalAlpha    = shadows[i].alpha;
-							ctx.shadowBlur     = em(shadows[i].blur);
-							ctx.shadowOffsetX  = 0;
-							ctx.shadowOffsetY  = 0;
-							ctx.shadowColor    = textColor;
-							ctx.restore();
-						}
-					}
-					ctx.font = fontSize + 'px Neon_Regular';
-					ctx.fillText("Neon Light", 35, 100);
-					ctx.fillStyle      = '#444';
-					ctx.globalAlpha    = 1;
-					ctx.shadowBlur     = em(0.1);
-					ctx.shadowOffsetX  = em(0.02);
-					ctx.shadowOffsetY  = em(0.02);
-					ctx.shadowColor    = '#000';
-					ctx.restore();
-				}
-
-			});
-
-			var libcanvas = new LibCanvas('#neon_test')
-				.size({
-					width : 450,
-					height: 180
-				}, true)
-				.start();
-
-
-			var neonText = new Neon();
-			libcanvas.addElement(neonText);
-
-			var switcher = function() {
-			  neonText.on = !neonText.on;
-			  libcanvas.update();
-			  switcher.delay( Number.random(100, 1500) );
-			};
-
-			switcher();
-
-		}
-	</script>
--->
-	<!--<fieldset class="main-block">
+	<fieldset class="main-block">
 		<legend>Basic</legend>
-		<h1 data-neon="basic">Neon Light</h1>
+		<h1 data-neon="basic">Neon Light_2</h1>
 	</fieldset>
 	<fieldset class="main-block">
 		<legend>Basic with blinking</legend>
-		<h1 data-neon="basic" data-neon-params="blinks">Neon Light</h1>
+		<h1 data-neon="basic" data-neon-params="blinks">Neon Light_3</h1>
 	</fieldset>
 	<fieldset class="main-block">
 		<legend>Custom</legend>
@@ -114,6 +40,6 @@
 	<fieldset class="main-block">
 		<legend>Auto generates</legend>
 		<h1 data-neon="auto">Neon Light</h1>
-	</fieldset>-->
+	</fieldset>
 </body>
 </html>
