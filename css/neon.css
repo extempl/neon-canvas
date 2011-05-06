@@ -31,7 +31,7 @@
 	position: relative;
 }
 
-*[data-neon='custom'] {
+*[data-neon='custom'], *[data-neon='auto'] {
 	margin:0;
 }
 

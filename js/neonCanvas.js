@@ -57,7 +57,7 @@ new function() {
 
 		replaceNeon: function () {
 			var $elem = this;
-			var padding = parseInt(($elem.css('padding')) + parseInt($elem.css('margin'))) || 50;
+			var padding = parseInt(($elem.css('padding')) + parseInt($elem.css('margin'))) || 50; //todo: $elem.parent() for data-neon='custom' & data-neon='auto'
 			var text = $elem.text();
 			var config = {
 				width     : parseInt($elem.css('width')) + padding * 2,
