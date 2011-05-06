@@ -14,18 +14,25 @@
 	font-family: Neon_Regular;
 	font-size:60px;
 	line-height:60px;
+	padding: 0.83em;
+	display:inline-block;
+}
+
+*[data-neon='basic'], *[data-neon] span.neonLayer {
+	z-index: 10;
+	color: #fff;
+	font-weight: normal;
+	display:inline-block;
+	position: relative;
 }
 
 *[data-neon] span {
-	z-index: 10;
-	position: relative;
-	font-weight: normal;
-}
-
-*[data-neon='basic'], *[data-neon='custom'] span {
-	color: #fff;
 	display:inline-block;
 	position: relative;
+}
+
+*[data-neon='custom'] {
+	margin:0;
 }
 
 .main-block {

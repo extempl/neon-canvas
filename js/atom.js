@@ -383,6 +383,18 @@ new function () {
 		get : function (index) {
 			return this.elems[index * 1 || 0];
 		},
+		parent : function(step) {
+			if(step === undefined)
+				var step = 1;
+			var stepCount = function(elem, step) {
+				if(step > 0) {
+					step--;
+					return stepCount(atom.dom(elem.first.parentNode), step);
+				}
+				return elem;
+			};
+			return stepCount(this, step);
+		},
 		filter: function (sel) {
 			if (sel.match(tagNameRE)) var tag = sel;
 			if (sel.match(idRE     )) var id  = sel.substr(1);
@@ -405,6 +417,19 @@ new function () {
 				return this.first.innerHTML;
 			}
 		},
+		text : function (value) {
+			if(document.getElementsByTagName("body")[0].innerText != undefined) {
+				if(value === undefined)
+					return this.first.innerText;
+				this.first.innerText = value;
+			}
+			else {
+				if(value === undefined)
+					return this.first.textContent;
+				this.first.textContent = value;
+			}
+			return this;
+		},
 		create : function (tagName, index, attr) {
 			if (typeof index == 'object') {
 				attr  = index;
@@ -420,8 +445,8 @@ new function () {
 		},
 		attr : function (attr) {
 			attr = setter(arguments);
-			if (typeof attr[0] == 'string') {
-				return this.first.getAttribute(attr[0]);
+			if (typeof attr == 'string') {
+				return this.first.getAttribute(attr);
 			}
 			return this.each(function (elem) {
 				for (var i in attr) elem.setAttribute(i, attr[i]);
@@ -429,8 +454,8 @@ new function () {
 		},
 		css : function (css) {
 			css = setter(arguments);
-			if (typeof css[0] == 'string') {
-				return this.first.style[css[0]];
+			if (typeof css == 'string') {
+				return window.getComputedStyle(this.first, "").getPropertyValue(css);
 			}
 			return this.each(function (elem) {
 				for (var i in css) {
