@@ -57,7 +57,14 @@ new function() {
 
 		replaceNeon: function () {
 			var $elem = this;
-			var padding = parseInt(($elem.css('padding')) + parseInt($elem.css('margin'))) || 50; //todo: $elem.parent() for data-neon='custom' & data-neon='auto'
+			var dataNeonIndents = function($elem, indent) {
+				return parseInt(
+					$elem.attr('data-neon') == 'basic'
+					? $elem.css(indent)
+					: $elem.parent().css(indent)
+				);
+			}
+			var padding = dataNeonIndents($elem, 'padding')	+ dataNeonIndents($elem, 'margin') || 50;
 			var text = $elem.text();
 			var config = {
 				width     : parseInt($elem.css('width')) + padding * 2,
@@ -76,24 +83,21 @@ new function() {
 					left: -config.padding + 'px'
 				}
 				: {top: 0, left: 0};
-
+			var transparentText = {
+				color  : 'rgba(0, 0, 0, 0)',
+				margin : 0
+			};
 			atom.dom()
 				.create('span')
 					.addClass('neonLayer')
 					.text(text)
-					.css({
-						color  : 'rgba(0, 0, 0, 0)',
-						margin : 0
-					})
+					.css(transparentText)
 					.appendTo($elem.html('')
-						.css({
-							color  : 'rgba(0, 0, 0, 0)',
-							margin : 0
-						})
+						.css(transparentText)
 					);
 
-			atom.dom() // todo: is it real to aapend it to before atom.dom() ?
-				.create('canvas')
+			atom.dom()
+				.create('canvas', 0)
 					.appendTo($elem)
 					.drawContent(config)
 					.parent()
@@ -110,7 +114,7 @@ new function() {
 				color      : '#fff',
 				colorOff   : '#444',
 				shadowOff  : '#000',
-				text       : 'Neon_Light',
+				text       : 'Neon&nbsp;Light',
 				blinks     : false
 			}, config);
 			var $elem = this;
@@ -139,37 +143,37 @@ new function() {
 					var ctx = this.libcanvas.ctx;
 					var shadowsSrc = {
 						chrome: {
-							0: {blur: 0.1},
+							0: {blur: 0.1, alpha: 1},
 							1: {blur: 0.6, alpha: 0.4},
 							2: {blur: 0.8, alpha: 0.6},
 							3: {blur: 1.0, alpha: 0.8},
-							4: {blur: 1.4}
+							4: {blur: 1.4, alpha: 1}
 						},
 						firefox: {
-							0: {blur: 0.1},
-							1: {blur: 0.6},
-							2: {blur: 0.8},
-							3: {blur: 1.0},
+							0: {blur: 0.1, alpha: 1},
+							1: {blur: 0.6, alpha: 1},
+							2: {blur: 0.8, alpha: 1},
+							3: {blur: 1.0, alpha: 1},
 							4: {blur: 0,   alpha: 0}
 						},
 						opera: {
 							1: {blur: 0.8, alpha: 0.4},
 							2: {blur: 1.5, alpha: 0.6},
 							3: {blur: 3.0, alpha: 0.8},
-							4: {blur: 6.0}
+							4: {blur: 6.0, alpha: 1}
 						}
 					};
 					var shadows = atom.extend(shadowsSrc.chrome, userAgent(shadowsSrc));
 					if(this.on) {
 						for(var i in shadows) {
-							ctx.fillText(text, padding, 55 + padding);
 							ctx.font           = fontSize + ' ' + fontFamily;
 							ctx.fillStyle      = color;
-							ctx.globalAlpha    = shadows[i].alpha || 1;
+							ctx.globalAlpha    = shadows[i].alpha;
 							ctx.shadowBlur     = em(shadows[i].blur);
 							ctx.shadowOffsetX  = 0;
 							ctx.shadowOffsetY  = 0;
 							ctx.shadowColor    = color;
+							ctx.fillText(text, padding, 55 + padding);
 							ctx.restore();
 						}
 					}
